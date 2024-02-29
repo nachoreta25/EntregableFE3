@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario con Validaciones</title>
+<style>
+    .error-message {
+        color: red;
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+
+<form id="myForm">
+    <div>
+        <label for="input1">Input 1:</label>
+        <input type="text" id="input1" name="input1">
+    </div>
+    <div>
+        <label for="input2">Input 2:</label>
+        <input type="text" id="input2" name="input2">
+    </div>
+    <button type="submit">Enviar</button>
+</form>
+
+<div id="cardContainer" style="display: none;">
+    <div id="card"></div>
+</div>
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var input1Value = document.getElementById('input1').value.trim();
+        var input2Value = document.getElementById('input2').value;
+
+        var errorContainer = document.getElementById('errorContainer');
+        var cardContainer = document.getElementById('cardContainer');
+        var card = document.getElementById('card');
+
+        // Validación de input1
+        if (input1Value.length < 3 || input1Value.startsWith(' ')) {
+            showError("Por favor chequea que la información sea correcta");
+            return;
+        }
+
+        // Validación de input2
+        if (input2Value.length < 6) {
+            showError("Por favor chequea que la información sea correcta");
+            return;
+        }
+
+        // Renderizar el componente Card
+        card.innerHTML = `
+            <p>Input 1: ${input1Value}</p>
+            <p>Input 2: ${input2Value}</p>
+            <!-- Agrega más información aquí si es necesario -->
+        `;
+        cardContainer.style.display = 'block';
+    });
+
+    function showError(message) {
+        var errorContainer = document.getElementById('errorContainer');
+        errorContainer.innerHTML = `<p class="error-message">${message}</p>`;
+        setTimeout(function() {
+            errorContainer.innerHTML = '';
+        }, 3000); // Limpiar el mensaje de error después de 3 segundos
+    }
+</script>
+
+</body>
+</html>
